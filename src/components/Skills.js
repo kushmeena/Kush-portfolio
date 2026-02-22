@@ -1,41 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Skills() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const skills = [
     {
       category: "Frontend",
       items: ["HTML5", "CSS3", "JavaScript", "React.js", "Redux", "Tailwind CSS"],
-      color: "#3b82f6", // blue accent
+      color: "#3b82f6",
     },
     {
       category: "Backend",
       items: ["Node.js", "Express.js", "REST APIs", "JWT", "Socket.io"],
-      color: "#16a34a", // green accent
+      color: "#16a34a",
     },
     {
       category: "Database & Tools",
       items: ["MongoDB", "MySQL", "Git & GitHub", "Postman", "Docker"],
-      color: "#f59e0b", // amber accent
+      color: "#f59e0b",
     },
   ];
 
   return (
     <section
+      id="skills"
       style={{
-        padding: "60px 20px",
+        padding: isMobile ? "40px 15px" : "60px 20px",
         backgroundColor: "#0f172a",
         color: "white",
         borderRadius: "12px",
-        margin: "40px",
+        margin: isMobile ? "20px" : "40px",
         boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
       }}
-      id="skills"
     >
       <h2
         style={{
           textAlign: "center",
-          marginBottom: "50px",
+          marginBottom: isMobile ? "30px" : "50px",
           color: "#3b82f6",
+          fontSize: isMobile ? "26px" : "32px",
         }}
       >
         Skills
@@ -45,7 +57,7 @@ function Skills() {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "30px",
+          gap: isMobile ? "20px" : "30px",
           flexWrap: "wrap",
           maxWidth: "1200px",
           margin: "auto",
@@ -55,23 +67,29 @@ function Skills() {
           <div
             key={index}
             style={{
-              width: "320px",
+              width: isMobile ? "100%" : "320px",
               backgroundColor: "#1e293b",
-              padding: "25px",
+              padding: isMobile ? "20px" : "25px",
               borderRadius: "16px",
               color: "white",
               cursor: "pointer",
-              boxShadow: `0 8px 25px rgba(0,0,0,0.4)`,
-              transform: "rotate(0deg)",
+              boxShadow: "0 8px 25px rgba(0,0,0,0.4)",
               transition: "all 0.4s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-12px) rotate(-1deg) scale(1.05)";
-              e.currentTarget.style.boxShadow = `0 20px 50px ${box.color}50`; // colored shadow
+              if (!isMobile) {
+                e.currentTarget.style.transform =
+                  "translateY(-12px) rotate(-1deg) scale(1.05)";
+                e.currentTarget.style.boxShadow = `0 20px 50px ${box.color}50`;
+              }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0px) rotate(0deg) scale(1)";
-              e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.4)";
+              if (!isMobile) {
+                e.currentTarget.style.transform =
+                  "translateY(0px) rotate(0deg) scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0 8px 25px rgba(0,0,0,0.4)";
+              }
             }}
           >
             <h3
@@ -79,7 +97,7 @@ function Skills() {
                 marginBottom: "20px",
                 color: box.color,
                 textAlign: "center",
-                fontSize: "22px",
+                fontSize: isMobile ? "20px" : "22px",
               }}
             >
               {box.category}
@@ -98,19 +116,23 @@ function Skills() {
                   key={i}
                   style={{
                     backgroundColor: "#334155",
-                    padding: "6px 14px",
+                    padding: isMobile ? "5px 12px" : "6px 14px",
                     borderRadius: "20px",
-                    fontSize: "13px",
+                    fontSize: isMobile ? "12px" : "13px",
                     fontWeight: "500",
                     transition: "all 0.3s",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = box.color;
-                    e.currentTarget.style.transform = "scale(1.1)";
+                    if (!isMobile) {
+                      e.currentTarget.style.backgroundColor = box.color;
+                      e.currentTarget.style.transform = "scale(1.1)";
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "#334155";
-                    e.currentTarget.style.transform = "scale(1)";
+                    if (!isMobile) {
+                      e.currentTarget.style.backgroundColor = "#334155";
+                      e.currentTarget.style.transform = "scale(1)";
+                    }
                   }}
                 >
                   {skill}
@@ -131,57 +153,46 @@ export default Skills;
 
 
 
+
+
 // import React from "react";
 
 // function Skills() {
 //   const skills = [
 //     {
 //       category: "Frontend",
-//       items: [
-//         "HTML5",
-//         "CSS3",
-//         "JavaScript",
-//         "React.js",
-//         "Redux",
-//         "Tailwind CSS",
-//       ],
+//       items: ["HTML5", "CSS3", "JavaScript", "React.js", "Redux", "Tailwind CSS"],
+//       color: "#3b82f6", // blue accent
 //     },
 //     {
 //       category: "Backend",
-//       items: [
-//         "Node.js",
-//         "Express.js",
-//         "REST APIs",
-//         "JWT",
-//         "Socket.io",
-//       ],
+//       items: ["Node.js", "Express.js", "REST APIs", "JWT", "Socket.io"],
+//       color: "#16a34a", // green accent
 //     },
 //     {
 //       category: "Database & Tools",
-//       items: [
-//         "MongoDB",
-//         "MySQL",
-//         "Git & GitHub",
-//         "Postman",
-//         "Docker",
-//       ],
+//       items: ["MongoDB", "MySQL", "Git & GitHub", "Postman", "Docker"],
+//       color: "#f59e0b", // amber accent
 //     },
 //   ];
 
 //   return (
 //     <section
 //       style={{
-//         padding: "70px 20px",
-//         backgroundColor: "#0f172a", // same dark outer background
+//         padding: "60px 20px",
+//         backgroundColor: "#0f172a",
+//         color: "white",
+//         borderRadius: "12px",
+//         margin: "40px",
+//         boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
 //       }}
-//      id="skills"
-
+//       id="skills"
 //     >
 //       <h2
 //         style={{
 //           textAlign: "center",
 //           marginBottom: "50px",
-//           color: "white",
+//           color: "#3b82f6",
 //         }}
 //       >
 //         Skills
@@ -206,28 +217,26 @@ export default Skills;
 //               padding: "25px",
 //               borderRadius: "16px",
 //               color: "white",
-//               transition: "0.4s",
 //               cursor: "pointer",
-//               boxShadow: "0 8px 25px rgba(0,0,0,0.4)",
+//               boxShadow: `0 8px 25px rgba(0,0,0,0.4)`,
+//               transform: "rotate(0deg)",
+//               transition: "all 0.4s ease",
 //             }}
 //             onMouseEnter={(e) => {
-//               e.currentTarget.style.transform =
-//                 "translateY(-10px) scale(1.03)";
-//               e.currentTarget.style.boxShadow =
-//                 "0 15px 40px rgba(59,130,246,0.5)";
+//               e.currentTarget.style.transform = "translateY(-12px) rotate(-1deg) scale(1.05)";
+//               e.currentTarget.style.boxShadow = `0 20px 50px ${box.color}50`; // colored shadow
 //             }}
 //             onMouseLeave={(e) => {
-//               e.currentTarget.style.transform =
-//                 "translateY(0px) scale(1)";
-//               e.currentTarget.style.boxShadow =
-//                 "0 8px 25px rgba(0,0,0,0.4)";
+//               e.currentTarget.style.transform = "translateY(0px) rotate(0deg) scale(1)";
+//               e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.4)";
 //             }}
 //           >
 //             <h3
 //               style={{
 //                 marginBottom: "20px",
-//                 color: "#3b82f6",
+//                 color: box.color,
 //                 textAlign: "center",
+//                 fontSize: "22px",
 //               }}
 //             >
 //               {box.category}
@@ -250,6 +259,15 @@ export default Skills;
 //                     borderRadius: "20px",
 //                     fontSize: "13px",
 //                     fontWeight: "500",
+//                     transition: "all 0.3s",
+//                   }}
+//                   onMouseEnter={(e) => {
+//                     e.currentTarget.style.backgroundColor = box.color;
+//                     e.currentTarget.style.transform = "scale(1.1)";
+//                   }}
+//                   onMouseLeave={(e) => {
+//                     e.currentTarget.style.backgroundColor = "#334155";
+//                     e.currentTarget.style.transform = "scale(1)";
 //                   }}
 //                 >
 //                   {skill}
@@ -264,3 +282,7 @@ export default Skills;
 // }
 
 // export default Skills;
+
+
+
+ 

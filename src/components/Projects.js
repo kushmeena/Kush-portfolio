@@ -1,7 +1,18 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Projects() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const projects = [
     {
       title: "JobSpider",
@@ -25,21 +36,21 @@ function Projects() {
 
   return (
     <div
+      id="projects"
       style={{
-        padding: "60px 20px",
+        padding: isMobile ? "40px 15px" : "60px 20px",
         backgroundColor: "#0f172a",
         color: "white",
         borderRadius: "12px",
-        margin: "40px",
+        margin: isMobile ? "20px" : "40px",
         boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
       }}
-      id="projects"
     >
       <h2
         style={{
           textAlign: "center",
-          fontSize: "36px",
-          marginBottom: "40px",
+          fontSize: isMobile ? "26px" : "36px",
+          marginBottom: isMobile ? "30px" : "40px",
           color: "#3b82f6",
         }}
       >
@@ -51,18 +62,17 @@ function Projects() {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: "30px",
+          gap: isMobile ? "20px" : "30px",
         }}
       >
         {projects.map((project, index) => (
           <div
             key={index}
             style={{
-              width: "320px",
+              width: isMobile ? "100%" : "320px",
               backgroundColor: "#1e293b",
-              padding: "25px",
+              padding: isMobile ? "20px" : "25px",
               borderRadius: "16px",
-              color: "white",
               transition: "0.4s",
               cursor: "pointer",
               boxShadow: "0 8px 25px rgba(0,0,0,0.4)",
@@ -71,13 +81,20 @@ function Projects() {
               justifyContent: "space-between",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-10px) scale(1.03)";
-              e.currentTarget.style.boxShadow =
-                "0 15px 40px rgba(59,130,246,0.5)";
+              if (!isMobile) {
+                e.currentTarget.style.transform =
+                  "translateY(-10px) scale(1.03)";
+                e.currentTarget.style.boxShadow =
+                  "0 15px 40px rgba(59,130,246,0.5)";
+              }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0px) scale(1)";
-              e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.4)";
+              if (!isMobile) {
+                e.currentTarget.style.transform =
+                  "translateY(0px) scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0 8px 25px rgba(0,0,0,0.4)";
+              }
             }}
           >
             <div>
@@ -86,11 +103,19 @@ function Projects() {
                   marginBottom: "15px",
                   color: "#3b82f6",
                   textAlign: "center",
+                  fontSize: isMobile ? "18px" : "20px",
                 }}
               >
                 {project.title}
               </h3>
-              <p style={{ marginBottom: "15px", color: "#cbd5e1" }}>
+
+              <p
+                style={{
+                  marginBottom: "15px",
+                  color: "#cbd5e1",
+                  fontSize: isMobile ? "14px" : "15px",
+                }}
+              >
                 {project.desc}
               </p>
 
@@ -108,9 +133,9 @@ function Projects() {
                     key={i}
                     style={{
                       backgroundColor: "#334155",
-                      padding: "6px 12px",
+                      padding: isMobile ? "5px 10px" : "6px 12px",
                       borderRadius: "20px",
-                      fontSize: "13px",
+                      fontSize: isMobile ? "12px" : "13px",
                       fontWeight: "500",
                     }}
                   >
@@ -120,7 +145,6 @@ function Projects() {
               </div>
             </div>
 
-            {/* Centered Button */}
             <div style={{ textAlign: "center" }}>
               <a
                 href={project.link}
@@ -128,13 +152,13 @@ function Projects() {
                 rel="noopener noreferrer"
                 style={{
                   display: "inline-block",
-                  padding: "10px 20px",
+                  padding: isMobile ? "8px 16px" : "10px 20px",
                   backgroundColor: "#3b82f6",
                   color: "white",
                   borderRadius: "8px",
                   textDecoration: "none",
                   fontWeight: "bold",
-                  fontSize: "14px",
+                  fontSize: isMobile ? "13px" : "14px",
                   transition: "0.3s",
                 }}
               >
@@ -149,6 +173,162 @@ function Projects() {
 }
 
 export default Projects;
+
+
+
+
+
+
+// import React from "react";
+
+// function Projects() {
+//   const projects = [
+//     {
+//       title: "JobSpider",
+//       desc: "A job portal application with clean UI, search & filter, and backend integration.",
+//       tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT"],
+//       link: "https://github.com/kushmeena",
+//     },
+//     {
+//       title: "RestroBuddy",
+//       desc: "Restaurant management system handling orders, menus, and inventory with responsive UI.",
+//       tech: ["React.js", "Node.js", "Express.js", "MySQL", "Bootstrap"],
+//       link: "https://github.com/kushmeena",
+//     },
+//     {
+//       title: "Portfolio Website",
+//       desc: "Personal portfolio website showcasing projects, skills, and contact information.",
+//       tech: ["React.js", "Tailwind CSS", "JavaScript", "Responsive Design"],
+//       link: "#",
+//     },
+//   ];
+
+//   return (
+//     <div
+//       style={{
+//         padding: "60px 20px",
+//         backgroundColor: "#0f172a",
+//         color: "white",
+//         borderRadius: "12px",
+//         margin: "40px",
+//         boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+//       }}
+//       id="projects"
+//     >
+//       <h2
+//         style={{
+//           textAlign: "center",
+//           fontSize: "36px",
+//           marginBottom: "40px",
+//           color: "#3b82f6",
+//         }}
+//       >
+//         Projects
+//       </h2>
+
+//       <div
+//         style={{
+//           display: "flex",
+//           flexWrap: "wrap",
+//           justifyContent: "center",
+//           gap: "30px",
+//         }}
+//       >
+//         {projects.map((project, index) => (
+//           <div
+//             key={index}
+//             style={{
+//               width: "320px",
+//               backgroundColor: "#1e293b",
+//               padding: "25px",
+//               borderRadius: "16px",
+//               color: "white",
+//               transition: "0.4s",
+//               cursor: "pointer",
+//               boxShadow: "0 8px 25px rgba(0,0,0,0.4)",
+//               display: "flex",
+//               flexDirection: "column",
+//               justifyContent: "space-between",
+//             }}
+//             onMouseEnter={(e) => {
+//               e.currentTarget.style.transform = "translateY(-10px) scale(1.03)";
+//               e.currentTarget.style.boxShadow =
+//                 "0 15px 40px rgba(59,130,246,0.5)";
+//             }}
+//             onMouseLeave={(e) => {
+//               e.currentTarget.style.transform = "translateY(0px) scale(1)";
+//               e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.4)";
+//             }}
+//           >
+//             <div>
+//               <h3
+//                 style={{
+//                   marginBottom: "15px",
+//                   color: "#3b82f6",
+//                   textAlign: "center",
+//                 }}
+//               >
+//                 {project.title}
+//               </h3>
+//               <p style={{ marginBottom: "15px", color: "#cbd5e1" }}>
+//                 {project.desc}
+//               </p>
+
+//               <div
+//                 style={{
+//                   display: "flex",
+//                   flexWrap: "wrap",
+//                   gap: "8px",
+//                   justifyContent: "center",
+//                   marginBottom: "15px",
+//                 }}
+//               >
+//                 {project.tech.map((tech, i) => (
+//                   <span
+//                     key={i}
+//                     style={{
+//                       backgroundColor: "#334155",
+//                       padding: "6px 12px",
+//                       borderRadius: "20px",
+//                       fontSize: "13px",
+//                       fontWeight: "500",
+//                     }}
+//                   >
+//                     {tech}
+//                   </span>
+//                 ))}
+//               </div>
+//             </div>
+
+//             {/* Centered Button */}
+//             <div style={{ textAlign: "center" }}>
+//               <a
+//                 href={project.link}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 style={{
+//                   display: "inline-block",
+//                   padding: "10px 20px",
+//                   backgroundColor: "#3b82f6",
+//                   color: "white",
+//                   borderRadius: "8px",
+//                   textDecoration: "none",
+//                   fontWeight: "bold",
+//                   fontSize: "14px",
+//                   transition: "0.3s",
+//                 }}
+//               >
+//                 View Project
+//               </a>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Projects;
 
 
 
